@@ -1,0 +1,6 @@
+
+# Default ignored files
+/workspace.xml
+*.xml
+.gitignore
+advent 2020.iml
