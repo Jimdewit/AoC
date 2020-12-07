@@ -2,7 +2,7 @@ import string
 
 
 def get_and_group_input(count_all=False):
-    "Returns a dict of groups; each group is a dict of letters"
+    """Returns a dict of groups; each group is a dict of letters"""
     with open('./input.txt', 'r') as answersfile:
         groups = {}
         single_group = {i: 0 for i in string.ascii_lowercase[:26]}
