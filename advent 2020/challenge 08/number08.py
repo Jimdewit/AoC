@@ -17,10 +17,10 @@ def iterator(pos=0, accumulator=0, shadow_instructions=None, instruction_set=Non
 
     try:
         op, value = instruction_set[pos]
-    except IndexError:
+    except IndexError:  # If we've reached the end of the input, we're probably done
         return True, accumulator
 
-    if shadow_instructions[pos][2] == 1:
+    if shadow_instructions[pos][2] == 1:  # Having seen something once already, we've reached the start of the loop. Return accumulator value
         if not jumper_finder:
             return accumulator
         else:
@@ -46,23 +46,24 @@ def second_wrapper(instruction_set):
     second_iteration=False
     loop_broken = False
     change_pos = 0
+    accumulator = 0
+
     while not loop_broken:
         new_instructions = deepcopy(instruction_set)
         if change_pos > len(instruction_set)-1:
             print(instruction_set[len(new_instructions) - 1])
             change_pos = 0
+            if second_iteration:
+                return "Unable to find anything"
             second_iteration = True
             continue
         if not second_iteration:
             if new_instructions[change_pos][0] == 'jmp':
                 new_instructions[change_pos][0] = 'nop'
-                print("Changing {} at pos {} to jmp".format(new_instructions[change_pos][0], change_pos))
         elif second_iteration:
             if new_instructions[change_pos][0] == 'nop':
                 new_instructions[change_pos][0] = 'jmp'
-                print("Changing {} at pos {} to nop".format(new_instructions[change_pos][0], change_pos))
-        else:
-            print("CRAP")
+
         change_pos += 1
         loop_broken, accumulator = iterator(instruction_set=new_instructions, jumper_finder=True)
 
