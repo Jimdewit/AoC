@@ -46,12 +46,11 @@ def get_input(inputfile):
         y = 0
         for key in keys:
             separated = key[:-1].split(' ')
-            sizes = [x for x in separated[0].split('-')]
-            proper_sizes = [int(x) for x in sizes]
+            sizes = [int(x) for x in separated[0].split('-')]
             letter = separated[1][0]
             password = separated[2]
 
-            values[y] = proper_sizes, letter, password
+            values[y] = sizes, letter, password
             y += 1
 
         return values
