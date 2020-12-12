@@ -36,30 +36,30 @@ def validate_keys_and_values_in_passports(passport_list, value_check=False):
 
         if turbocheck:
             wrong = False
-            for kv in kv_pairs:
+            for k, v in kv_pairs:
                 wrong = False
-                if kv[0] == 'byr' and not 1920 <= int(kv[1]) <= 2002:
+                if k == 'byr' and not re.match('^(19[2-9][0-9]|200[0-2])$', v):
                     wrong = True
                     break
-                elif kv[0] == 'iyr' and not 2010 <= int(kv[1]) <= 2020:
+                elif k == 'iyr' and not re.match('^20([1][0-9]|20)$', v):
                     wrong = True
                     break
-                elif kv[0] == 'eyr' and not 2020 <= int(kv[1]) <= 2030:
+                elif k == 'eyr' and not re.match('^20(2[0-9]|30)$', v):
                     wrong = True
                     break
-                elif kv[0] == 'hgt' and not re.match('1([5-8][0-9]|9[0-3])cm|(59|6[0-9]|7[0-6])in', kv[1]):
+                elif k == 'hgt' and not re.match('1([5-8][0-9]|9[0-3])cm|(59|6[0-9]|7[0-6])in', v):
                     wrong = True
                     break
-                elif kv[0] == 'hcl' and not re.match('#[0-9a-f]{6}', kv[1]):
+                elif k == 'hcl' and not re.match('#[0-9a-f]{6}', v):
                     wrong = True
                     break
-                elif kv[0] == 'ecl' and not kv[1] in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']:
+                elif k == 'ecl' and not re.match('^amb|blu|brn|gry|grn|hzl|oth$', v):
                     wrong = True
                     break
-                elif kv[0] == 'pid' and not re.match('^[0-9]{9}$', kv[1]):
+                elif k == 'pid' and not re.match('^[0-9]{9}$', v):
                     wrong = True
                     break
-                elif kv[0] == 'cid':
+                elif k == 'cid':
                     continue
                 else:
                     continue
