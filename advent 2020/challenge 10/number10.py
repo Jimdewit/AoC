@@ -48,6 +48,7 @@ def solve(joltages, arrangement_finder=False):
                     valid_routes *= 42
                 pos += consec_counter if consec_counter > 0 else 1
                 if pos >= len(sorted_joltages) - 1:
+                    # This should NOT reach production
                     break
                 x = sorted_joltages[pos]
                 y = 1
