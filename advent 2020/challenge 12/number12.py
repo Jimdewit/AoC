@@ -9,7 +9,7 @@ def process_directions(directionset, use_waypoint=False, debug_mode=False):
     wp = [1, 10]
     heading = 1
     for instruction, amount in directionset:
-        # Process ship rotations
+        # Process ship rotations - heading is mapped starting at 0 for North, and increasing clockwise
         if instruction == 'L':
             heading = int(heading - amount/90 if heading - amount/90 >= 0 else 4 - abs(heading - amount/90))
         elif instruction == 'R':
