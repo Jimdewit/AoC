@@ -1,5 +1,4 @@
 import datetime
-from math import gcd
 
 
 def get_input():
@@ -29,7 +28,6 @@ def get_nearest_bus(bus_schedule, find_next=True):
         timestamp = 0
         for line_number in departure_times:
             if line_number != 'x':
-                line_number = int(line_number)
                 while (timestamp % line_number) != 0:
                     timestamp += period
                 period *= line_number
