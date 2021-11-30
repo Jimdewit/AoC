@@ -12,17 +12,16 @@ def parse_args():
                         help='For which day to download the puzzle')
     parser.add_argument('-y', '--year', type=int, default=2020, help='The year for which to prepare (default = 2021)')
     parser.add_argument('-c', '--cookie', type=str, default='.aoc_session_cookie', help='The file which contains the AoC session cookie')
-    args = parser.parse_args()
 
+    args = parser.parse_args()
     if 0 < args.day < 9:
         day = '0{}'.format(args.day)
     else:
         print("day = {}".format(args.day))
         day = str(args.day)
     year = args.year
-    print(args.cookie)
     cookie = json.loads(open(args.cookie, 'r').read())
-    print(cookie)
+
     return day, year, cookie
 
 
@@ -47,7 +46,7 @@ def prepare_from_template(daily_path, day):
                 new_file.writelines(templ.readlines())
 
 
-def get_puzzle_input(day, year, aoc_cookie, daily_path):
+def get_and_process_puzzle_input(day, year, aoc_cookie, daily_path):
     # Convert day to int, since AoC doesn't use leading zeroes
     puzzle_input_path = '{}/input.txt'.format(daily_path)
     if not os.path.exists(puzzle_input_path):
@@ -67,8 +66,7 @@ def process():
     day, year, cookie = parse_args()
     daily_path = create_directory_from_template(day, year)
     prepare_from_template(daily_path, day)
-    puzzle_input = get_puzzle_and_input(day, year, cookie)
-    process_puzzle_input(daily_path, puzzle_input)
+    get_and_process_puzzle_input(day, year, cookie, daily_path)
     open_daily_puzzle(day, year)
 
 
