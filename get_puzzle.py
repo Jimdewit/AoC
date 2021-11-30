@@ -10,7 +10,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Puzzle preparation parameters')
     parser.add_argument('-d', '--day', type=int, choices=range(0,25), metavar='[1-25]', default=1,
                         help='For which day to download the puzzle')
-    parser.add_argument('-y', '--year', type=int, default=2020, help='The year for which to prepare (default = 2021)')
+    parser.add_argument('-y', '--year', type=int, default=2021, help='The year for which to prepare (default = 2021)')
     parser.add_argument('-c', '--cookie', type=str, default='.aoc_session_cookie', help='The file which contains the AoC session cookie')
 
     args = parser.parse_args()
@@ -38,12 +38,22 @@ def create_directory_from_template(day, year):
 
 
 def prepare_from_template(daily_path, day):
+    number_phile = 'number{}'.format(day)
     with open('./templates/template.py', 'r') as templ:
-        daily_filename = '{}/number{}.py'.format(daily_path, day)
+        daily_filename = '{}/{}.py'.format(daily_path, number_phile)
         if not os.path.exists(daily_filename):
             with open('{}'.format(daily_filename), 'w+') as new_file:
                 print('Creating file {}'.format(daily_filename))
                 new_file.writelines(templ.readlines())
+
+    with open('./templates/test_template.py', 'r') as test_templ:
+        daily_filename = '{}/test{}.py'.format(daily_path, day)
+        if not os.path.exists(daily_filename):
+            with open('{}'.format(daily_filename), 'a+') as new_file:
+                for line in test_templ.readlines():
+                    if line.strip('\n') == 'from xx import solve':
+                        line = line.replace('xx', number_phile)
+                    new_file.write(line)
 
 
 def get_and_process_puzzle_input(day, year, aoc_cookie, daily_path):
@@ -54,7 +64,7 @@ def get_and_process_puzzle_input(day, year, aoc_cookie, daily_path):
         with open(puzzle_input_path, 'w+') as input_file:
             input_file.writelines(l for l in puzzle_input.text)
     else:
-        print('Puzzle input already exists at {}\nAborting to prevent AoC overload!'.format(puzzle_input_path))
+        raise('Puzzle input already exists at {}\nAborting to prevent AoC overload!'.format(puzzle_input_path))
 
 
 def open_daily_puzzle(day, year):
