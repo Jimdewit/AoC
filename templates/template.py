@@ -2,7 +2,7 @@
 
 def get_input():
     with open('./input.txt', 'r') as input_file:
-        lines = input_file.readlines
+        lines = [l.strip('\n') for l in input_file.readlines()]
     return lines
 
 
