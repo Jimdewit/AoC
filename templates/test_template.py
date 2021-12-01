@@ -2,8 +2,10 @@ from xx import solve
 
 
 def test_valid_result():
-    assert 1 == 1
+    outcome = solve([f.strip('\n') for f in open('./test_input.txt').readlines()])
+    assert outcome == 1
 
 
 def test_invalid_result():
-    assert 1 != 0
+    outcome = solve([f.strip('\n') for f in open('./test_input.txt').readlines()])
+    assert outcome != 1

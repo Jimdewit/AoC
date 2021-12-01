@@ -42,18 +42,22 @@ def prepare_from_template(daily_path, day):
     with open('./templates/template.py', 'r') as templ:
         daily_filename = '{}/{}.py'.format(daily_path, number_phile)
         if not os.path.exists(daily_filename):
-            with open('{}'.format(daily_filename), 'w+') as new_file:
-                print('Creating file {}'.format(daily_filename))
+            with open(daily_filename, 'w+') as new_file:
                 new_file.writelines(templ.readlines())
 
     with open('./templates/test_template.py', 'r') as test_templ:
         daily_filename = '{}/test{}.py'.format(daily_path, day)
         if not os.path.exists(daily_filename):
-            with open('{}'.format(daily_filename), 'a+') as new_file:
+            with open(daily_filename, 'a+') as new_file:
                 for line in test_templ.readlines():
                     if line.strip('\n') == 'from xx import solve':
                         line = line.replace('xx', number_phile)
                     new_file.write(line)
+
+    daily_filename = '{}/test_input.txt'.format(daily_path, day)
+    if not os.path.exists(daily_filename):
+        with open(daily_filename, 'w+') as test_input_file:
+            test_input_file.writelines('')
 
 
 def get_and_process_puzzle_input(day, year, aoc_cookie, daily_path):
