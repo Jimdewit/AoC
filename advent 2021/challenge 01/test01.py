@@ -9,3 +9,4 @@ def test_first_result():
 def test_second_result():
     increase = process_depth([int(f.strip('\n')) for f in open('./test_input.txt').readlines()], use_sliding_window=True)
     assert increase == 5
+

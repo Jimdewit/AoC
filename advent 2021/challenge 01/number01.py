@@ -11,8 +11,7 @@ def process_depth(depth_list, use_sliding_window=False):
     if not use_sliding_window:
         previous_depth = depth_list[0]
         for depth in depth_list:
-            # Using > weirdly leads to an off-by-one; >= returns the correct number?!
-            if depth >= previous_depth:
+            if int(depth) > int(previous_depth):
                 increase_counter += 1
             previous_depth = depth
         return increase_counter
