@@ -128,7 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /.idea/.gitignore
-/*/*/input.txt
+/*/*/*input.txt
 /.idea/AoC.iml
 /.idea/misc.xml
 /.idea/modules.xml
