@@ -17,7 +17,7 @@ def parse_instructions(puzzle_input, use_aim=False):
             if instruction == 'forward':
                 x = translate(x, translation)
             elif instruction == 'down':
-                z =translate(z, translation)
+                z = translate(z, translation)
             elif instruction == 'up':
                 z = translate(z, -translation)
         else:
