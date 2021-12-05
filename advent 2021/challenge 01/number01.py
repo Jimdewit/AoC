@@ -21,7 +21,7 @@ def process_depth(depth_list, use_sliding_window=False):
         for depth in depth_list:
             current_window = sum(int(x) for x in depth_list[starting_pos:starting_pos+3])
             if current_window > previous_window:
-                increase_counter +=1
+                increase_counter += 1
             previous_window = current_window
             starting_pos += 1
         return increase_counter
