@@ -1,5 +1,3 @@
-# 345793
-# 1572643095893
 
 
 def process_pregnancy(more_fish, day_counter=1, max_days=80):
