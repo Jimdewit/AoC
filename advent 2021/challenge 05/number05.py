@@ -21,15 +21,9 @@ def process_single_coordinate_set(coordinate_pair, seen_coordinates, diagonal=Fa
             for y_delta in range(y1, y2+1) if y2 > y1 else range(y2, y1+1):
                 seen_coordinates += [(x1 + x_delta_counter if y2 > y1 else x2 + x_delta_counter, y_delta)]
                 if y2 > y1:
-                    if x2 > x1:
-                        x_delta_counter += 1
-                    else:
-                        x_delta_counter -= 1
+                    x_delta_counter += 1 if x2 > x1 else -1
                 else:
-                    if x2 > x1:
-                        x_delta_counter -= 1
-                    else:
-                        x_delta_counter += 1
+                    x_delta_counter += -1 if x2 > x1 else 1
 
     return seen_coordinates
 
@@ -37,8 +31,8 @@ def process_single_coordinate_set(coordinate_pair, seen_coordinates, diagonal=Fa
 def process_coordinates(list_of_pairs, diagonal=False):
     seen_coordinates = []
     for pair in list_of_pairs:
-        process_single_coordinate_set(pair, seen_coordinates, diagonal=diagonal)
-    return sum(value >= 2 for value in Counter(seen_coordinates).values())
+        seen_coordinates = process_single_coordinate_set(pair, seen_coordinates, diagonal=diagonal)
+    return sum(times_seen >= 2 for times_seen in Counter(seen_coordinates).values())
 
 
 def get_input():
