@@ -14,20 +14,12 @@ def process_pregnancy(fishes, more_fish={}, day_counter=1, max_days=80):
     else:
         fish_giving_birth = more_fish[0]
 
-        more_fish[0] = more_fish[1]
-        more_fish[1] = more_fish[2]
-        more_fish[2] = more_fish[3]
-        more_fish[3] = more_fish[4]
-        more_fish[4] = more_fish[5]
-        more_fish[5] = more_fish[6]
-        more_fish[6] = more_fish[7] + fish_giving_birth
-        more_fish[7] = more_fish[8]
+        for x in range(0,8):
+            more_fish[x] = more_fish[x+1] if x != 6 else (more_fish[x+1] + fish_giving_birth)
         more_fish[8] = fish_giving_birth
-
 
     if day_counter < max_days:
         day_counter += 1
-        #print('{} - Currently at iteration {}, fish length at {}'.format(datetime.datetime.now(), day_counter, sum(v for v in more_fish.values()) if day_counter > 1 else 1))
         return process_pregnancy(fishes, more_fish, day_counter, max_days=max_days)
     else:
         return sum(v for v in more_fish.values())
