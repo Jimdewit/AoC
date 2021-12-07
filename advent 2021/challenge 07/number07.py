@@ -1,14 +1,6 @@
 import statistics
 
 
-def find_middle_number(input_list):
-    middle = float(len(input_list))/2.
-    if middle % 2 != 0:
-        return input_list[int(middle - .5)]
-    else:
-        return input_list[int(middle)], input_list[int(middle-1)]
-
-
 def check_positions(list_of_positions, increase_expense=False):
     fuel_sum = 0
     if not increase_expense:
