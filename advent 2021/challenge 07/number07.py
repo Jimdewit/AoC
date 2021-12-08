@@ -5,7 +5,6 @@ def check_positions(list_of_positions, increase_expense=False):
     fuel_sum = 0
     if not increase_expense:
         median = int(statistics.median(list_of_positions))
-        print(int(median))
         for x in list_of_positions:
             fuel_sum += median - x if median > x else x - median
     else:
