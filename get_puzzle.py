@@ -14,7 +14,7 @@ def parse_args():
     parser.add_argument('-c', '--cookie', type=str, default='.aoc_session_cookie', help='The file which contains the AoC session cookie')
 
     args = parser.parse_args()
-    if 0 < args.day < 9:
+    if 0 < args.day < 10:
         day = '0{}'.format(args.day)
     else:
         print("day = {}".format(args.day))
