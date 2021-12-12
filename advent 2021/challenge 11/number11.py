@@ -59,17 +59,14 @@ def process_octopi(octopi_list, keep_searching=False):
         if process_counter == 100 and not keep_searching:
             return flash_counter
         elif current_counter == 100:
-            print("{} - Fishes flashing be like:\n{}".format(process_counter, octopi_list))
-            print("With flash counter at {}".format(flash_counter))
             return process_counter
-            # return process_counter+1
         else:
             flash_counter += current_counter
             process_counter += 1
 
 
 def get_input():
-    with open('./test_input.txt', 'r') as input_file:
+    with open('./input.txt', 'r') as input_file:
         lines = [l.strip('\n') for l in input_file.readlines()]
         octopus_list = []
         for l in lines:
@@ -82,7 +79,6 @@ def get_input():
 
 def solve():
     daily_input = get_input()
-    # print(process_octopi(daily_input, iterations=2))
     print("100 iterations leads to {} flashes".format(process_octopi(daily_input)))
     print("Simultaneousness achieved at iteration {}".format(process_octopi(daily_input, keep_searching=True)))
 
