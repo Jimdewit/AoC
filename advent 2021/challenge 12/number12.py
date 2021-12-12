@@ -13,35 +13,20 @@ def find_next_points(possible_routes, route_list, finished_routes=[], multiple_v
             if last in elem:
                 if 'end' in elem and 'end' not in route:
                     new_routes += [route + ['end']]
+                    continue
                 elif 'start' not in elem:
-                    if elem[1] == last:
-                        if elem[0].islower():
-                            if not multiple_visits:
-                                if elem[0] not in route:
-                                    new_routes += [[l for l in route] + [elem[0]]]
-                            else:
-                                if 2 not in Counter(l for l in route if l.islower()).values() and multiple_visits:
-                                    new_routes += [[l for l in route] + [elem[0]]]
-                                elif elem[0] not in route:
-                                    new_routes += [[l for l in route] + [elem[0]]]
-                        elif [elem[0], last, elem[0]] not in route:
-                            new_routes += [[l for l in route] + [elem[0]]]
+                    last, next = [elem[0], elem[1]] if elem[0] == last else [elem[1], elem[0]]
+                    if next.islower():
+                        if not multiple_visits:
+                            if next not in route:
+                                new_routes += [[r for r in route] + [next]]
                         else:
-                            continue
-                    elif elem[0] == last:
-                        if elem[1].islower():
-                            if not multiple_visits:
-                                if elem[1] not in route:
-                                    new_routes += [[l for l in route] + [elem[1]]]
-                            else:
-                                if 2 not in Counter(l for l in route if l.islower()).values() and multiple_visits:
-                                    new_routes += [[l for l in route] + [elem[1]]]
-                                elif elem[1] not in route:
-                                    new_routes += [[l for l in route] + [elem[1]]]
-                        elif [elem[1], last, elem[1]] not in route:
-                            new_routes += [[l for l in route] + [elem[1]]]
-                        else:
-                            continue
+                            if 2 not in Counter(i for i in route if i.islower()).values() and multiple_visits:
+                                new_routes += [[r for r in route] + [next]]
+                            elif next not in route:
+                                new_routes += [[r for r in route] + [next]]
+                    elif [next, last, next] not in route:
+                        new_routes += [[r for r in route] + [next]]
                     else:
                         continue
                 else:
