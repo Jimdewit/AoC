@@ -1,18 +1,6 @@
 import re
 
 
-def calculate_calories(elf_calories, find_multiple=False):
-    if not find_multiple:
-        return max(elf_calories)
-    else:
-        elf_sum = 0
-        for x in range(0, 3):
-            elf_sum += max(elf_calories)
-            elf_calories.pop(elf_calories.index(max(elf_calories)))
-
-        return elf_sum
-
-
 def get_input():
     with open('./input.txt', 'r') as input_file:
         elves = []
@@ -27,14 +15,13 @@ def get_input():
 
         elves.append(calorie_counter)
 
-    return elves
+    return sorted(elves)
 
 
 def solve():
     elves_with_calories = get_input()
-    print(elves_with_calories)
-    print(calculate_calories(elves_with_calories))
-    print(calculate_calories(elves_with_calories, find_multiple=True))
+    print(elves_with_calories[-1])
+    print(sum(elves_with_calories[-3:]))
 
 
 if __name__ == "__main__":
