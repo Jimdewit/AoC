@@ -1,23 +1,27 @@
+import numpy
 
-def find_adjacent(x, y, height_map):
-    try:
-        above = [height_map[y-1][x][0], x, y]
-    except (KeyError, IndexError):
-        above = 10
-    try:
-        below = [height_map[y+1][x][0], x, y+1]
-    except (KeyError, IndexError):
-        below = 10
-    try:
-        left = [height_map[y][x-1][0] if x-1 >= 0 else 10, x-1, y]
-    except (KeyError, IndexError):
-        left = 10
-    try:
-        right = [height_map[y][x+1][0], x+1, y]
-    except (KeyError, IndexError):
-        right = 10
 
-    return [above, below, left, right]
+def find_neighbour_coords(i, j, shape_h, shape_v):
+    print("H {} V {}".format(shape_h, shape_v))
+    left = [i-1, j] if i-1 >= 0 else None
+    right = [i+1, j] if i+1 < shape_h else None
+    above = [i, j-1] if j-1 >= 0 else None
+    below = [i, j+1] if j+1 < shape_v else None
+    print(left, right, above, below)
+    return [left, right, above, below]
+
+
+def find_adjacents(x, y, height_map, processed=[]):
+    neighbours = []
+    neighbour_coords = find_neighbour_coords(x, y, height_map.shape[0]-1, height_map.shape[1]-1)
+    for coord in neighbour_coords:
+        if coord and coord not in processed:
+            neighbours += [height_map[coord[0]][coord[1]]]
+            processed += [[coord[0],coord[1]]]
+        else:
+            neighbours += [10]
+
+    return neighbours, processed
 
 
 def is_height_lowest(height, neighbours):
@@ -29,69 +33,47 @@ def is_height_lowest(height, neighbours):
     return True
 
 
+def is_height_highest(height, neighbours):
+    return [n for n in neighbours if height < n]
+
+
 def score_heights(height_map):
     risk_counter = 0
-    for y in height_map.keys():
-        for single_height in height_map[y]:
-            height, x = single_height[0], single_height[1]
-            adjacent_numbers = find_adjacent(x, y, height_map)
+    for x in range(height_map.shape[0]):
+        for y in range(height_map.shape[1]):
+            height = height_map[x, y]
+            adjacent_numbers, processed = find_adjacents(x, y, height_map)
+            print(adjacent_numbers)
             if is_height_lowest(height, adjacent_numbers):
                 risk_counter += (height + 1)
     return risk_counter
 
 
-def parse_single_basin(key, key_list, basin_map):
-    k, x, y = key
-    find_adjacent(x, y, basin_map)
-
-
-def height_has_lower_neighbour(height, neighbours):
-    lower_neighbours = []
-    for neighbour in neighbours:
-        if not isinstance(neighbour, list):
-            continue
-        else:
-            if height < neighbour[0]:
-                lower_neighbours += [neighbour]
-    return lower_neighbours
-
-
-def parse_heights(height_map, basins_found):
-    for y in height_map.keys():
-        print('Height map start: {}'.format(height_map[y]))
-        height_adjacents = {}
-        for single_height in height_map[y]:
-            height_adjacents[y] = []
-            height, x = single_height[0], single_height[1]
-            adjacent_numbers = find_adjacent(x, y, height_map)
-            next_to_check = []
-            height_adjacents[y] += [[h, hx] for h, hx, hy in [single_height for single_height in height_has_lower_neighbour(height, adjacent_numbers)]]
-            print('Removing single height {}'.format(single_height))
-            height_map[y].pop(height_map[y].index(single_height))
-
-        print('Height map finis: {}'.format(height_map[y]))
-    return height_map
+def find_basins(height_map):
+    for x in range(height_map.shape[0]):
+        for y in range(height_map.shape[1]):
+            height = height_map[x, y]
+            adjacent_numbers = find_adjacents(x, y, height_map)
+            # if is_height_highest()
+    print(1)
 
 
 def get_input():
-    with open('./input.txt', 'r') as input_file:
+    with open('./test_input.txt', 'r') as input_file:
         lines = [l.strip('\n') for l in input_file.readlines()]
-        line_counter = 0
-        line_dict = {}
+        height_list = []
         for l in lines:
-            line_dict[line_counter] = []
-            pos = 0
+            single_line = []
             for x in l:
-                line_dict[line_counter] += [[int(x), pos]]
-                pos += 1
-            line_counter += 1
-    return line_dict
+                single_line += [int(x)]
+            height_list += [single_line]
+    return numpy.array(height_list)
 
 
 def solve():
     daily_input = get_input()
     print('Total risk equals {}'.format(score_heights(daily_input)))
-    parse_heights(daily_input, None)
+    # score_heights(daily_input, find_basins=True)
 
 
 if __name__ == "__main__":
