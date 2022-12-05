@@ -29,7 +29,7 @@ def get_input():
 
             assigned_plot_list.append((((int(p1.split('-')[0]), int(p1.split('-')[1])),
                                         (int(p2.split('-')[0]), int(p2.split('-')[1])))))
-
+        print(assigned_plot_list)
     return assigned_plot_list
 
 
