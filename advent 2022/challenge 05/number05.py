@@ -14,8 +14,7 @@ def process_movement(stacks, instructions, process_multiple=False):
             del stacks[source_stack][-amount:]
         else:
             for x in range(1, amount+1):
-                stacks[target_stack] += stacks[source_stack][-1]
-                del stacks[source_stack][-1]
+                stacks[target_stack] += stacks[source_stack].pop()
 
     code = ''
     for x in range(1, len(stacks.keys())+1):
@@ -28,17 +27,17 @@ def get_input():
         stacks = {}
         instructions = []
         lines = [l.strip('\n') for l in input_file.readlines()]
+        item_pattern = re.compile('([A-Z])+')
+        instruction_pattern = re.compile('move (\d+) from (\d+) to (\d+)')
         for line in lines:
-            item_pattern = re.compile('([A-Z])+')
-            item_groups = item_pattern.finditer(line)
-            if item_groups:
-                for item in item_groups:
-                    item_pos = int((item.span()[1]+2)/4)
-                    item_to_append = line[item.span()[0]]
-                    stacks.setdefault(item_pos, []).append(item_to_append)
 
-        for line in lines:
-            instruction_pattern = re.compile('move (\d+) from (\d+) to (\d+)')
+            item_groups = item_pattern.finditer(line)
+
+            for item in item_groups:
+                item_pos = int((item.span()[1]+2)/4)
+                item_to_append = line[item.span()[0]]
+                stacks.setdefault(item_pos, []).append(item_to_append)
+
             instruction_groups = instruction_pattern.findall(line)
             if instruction_groups:
                 instructions.append(tuple(int(x) for x in instruction_groups[0]))
