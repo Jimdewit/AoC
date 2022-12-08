@@ -23,7 +23,6 @@ def find_deletion_candidates(target_dict, cutoff_value):
                 candidates += [value]
         if isinstance(value, dict):
             candidates += find_deletion_candidates(value, cutoff_value)
-            #return find_deletion_candidates(target_dict[key], cutoff_value)
     return candidates
 
 
