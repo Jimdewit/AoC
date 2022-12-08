@@ -1,10 +1,11 @@
-def tree_if_bigger_than_neighbours(grid, x, y):
+def tree_is_bigger_than_neighbours(grid, x, y):
     left_neighbours = [grid[y][xl] for xl in range(0, x)]
     right_neighbours = [grid[y][xr] for xr in range(x+1, len(grid[y]))]
     top_neighbours = [grid[yt][x] for yt in range(0, y)]
     bottom_neighbours = [grid[yb][x] for yb in range(y+1, len(grid))]
 
-    if grid[y][x] > max(left_neighbours) or grid[y][x] > max(right_neighbours) or grid[y][x] > max(top_neighbours) or grid[y][x] > max(bottom_neighbours):
+    if grid[y][x] > max(left_neighbours) or grid[y][x] > max(right_neighbours) \
+        or grid[y][x] > max(top_neighbours) or grid[y][x] > max(bottom_neighbours):
             return True
     return False
 
@@ -25,7 +26,7 @@ def find_visible(tree_grid):
                     visible += 1
                     trees_counted.append((x, y))
             else:
-                if tree_if_bigger_than_neighbours(tree_grid, x, y):
+                if tree_is_bigger_than_neighbours(tree_grid, x, y):
                     if (x, y) not in trees_counted:
                         visible += 1
                         trees_counted.append((x, y))
