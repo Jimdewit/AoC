@@ -11,7 +11,6 @@ def tree_is_bigger_than_neighbours(grid, x, y):
 
 
 def find_visible(tree_grid):
-    x = 0
     visible = 0
     trees_counted = []
     for y in range(0, len(tree_grid)):
