@@ -1,20 +1,32 @@
+from math import ceil
+
+debug = False
+
 def translate_tail(head_positions, tail_positions):
     head_pos = head_positions[-1]
     tail_pos = tail_positions[-1]
     head_x, head_y = head_pos[0], head_pos[1]
     tail_x, tail_y = tail_pos[0], tail_pos[1]
-    print('Comparing {} and {}'.format(head_pos, tail_pos))
+    if debug:
+        print('Comparing {} and {}'.format(head_pos, tail_pos))
     if abs(head_x - tail_x) <= 1 and abs(head_y - tail_y) <= 1:
-        # print('No tail adjustment needed')
+        if debug:
+            print('No tail adjustment needed')
+        tail_positions.append(tail_pos)
         return tail_positions
     else:
-        print('Moving tail {} to {}'.format(tail_pos, head_positions[-2]))
-        tail_positions.append(head_positions[-2])
+        dx = ceil((head_x-tail_x) / 2) if head_x > tail_x else -ceil((tail_x-head_x) /2)
+        dy = ceil((head_y-tail_y) / 2) if head_y > tail_y else -ceil((tail_y-head_y) /2)
+        new_tail_pos = int(tail_x+dx), int(tail_y+dy)
+        if debug:
+            print('Moving tail {} to {}'.format(tail_pos, new_tail_pos))
+        tail_positions.append(new_tail_pos)
         return tail_positions
 
 
 def translate_x(amount, head_positions, tails, step):
-    print('translating {} over x, heads at {}'.format(amount, head_positions))
+    if debug:
+        print('translating {} over x, heads at {}'.format(amount, head_positions))
     start_x = head_positions[-1][0]
     start_y = head_positions[-1][1]
     for x in range(start_x+step, start_x+amount, step):
@@ -26,7 +38,8 @@ def translate_x(amount, head_positions, tails, step):
 
 
 def translate_y(amount, head_positions, tails, step):
-    print('translating {} over y, heads at {}'.format(amount, head_positions))
+    if debug:
+        print('translating {} over y, heads at {}'.format(amount, head_positions))
     start_x = head_positions[-1][0]
     start_y = head_positions[-1][1]
     for y in range(start_y+step, start_y+amount, step):
@@ -58,16 +71,18 @@ def process_instructions(instruction_set):
     print(tails)
     for translation in instruction_set:
         head_positions, tails = translate_head(translation, head_positions, tails)
-        print('Finished translation, heads at {} tail at {}'.format(head_positions, tails))
+        if debug:
+            print('Finished translation, heads at {} tail at {}'.format(head_positions, tails))
+            print('Finished translation, heads at {} tail at {}'.format(head_positions, tails))
+            print('Number of tails: {}'.format(len(tails)))
     print(len(set(tails[-1])))
 
 def get_input():
-    with open('test_input_part2.txt', 'r') as input_file:
+    with open('input.txt', 'r') as input_file:
         instructions = []
         lines = [l.strip('\n') for l in input_file.readlines()]
         for l in lines:
             instructions.append(tuple(i for i in l.split()))
-    print(instructions)
     return instructions
 
 

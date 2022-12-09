@@ -50,8 +50,9 @@ def process_instructions(instruction_set):
         head_positions, tail_positions = translate_head(translation, head_positions, tail_positions)
     print(len(set(tail_positions)))
 
+
 def get_input():
-    with open('./test_input_part1.txt', 'r') as input_file:
+    with open('./input.txt', 'r') as input_file:
         instructions = []
         lines = [l.strip('\n') for l in input_file.readlines()]
         for l in lines:
