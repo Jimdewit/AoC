@@ -32,8 +32,9 @@ def translate_x(amount, head_positions, tails, step):
     for x in range(start_x+step, start_x+amount, step):
         head_positions.append((x, start_y))
         new_tails = [translate_tail(head_positions, tails[0])]
-        for tail_positions in tails[1:]:
-            new_tails.append(translate_tail(new_tails[tails.index(tail_positions) - 1], tail_positions))
+        if len(tails) > 1:
+            for tail_positions in tails[1:]:
+                new_tails.append(translate_tail(new_tails[tails.index(tail_positions) - 1], tail_positions))
     return head_positions, new_tails
 
 
@@ -45,8 +46,9 @@ def translate_y(amount, head_positions, tails, step):
     for y in range(start_y+step, start_y+amount, step):
         head_positions.append((start_x, y))
         new_tails = [translate_tail(head_positions, tails[0])]
-        for tail_positions in tails[1:]:
-            new_tails.append(translate_tail(new_tails[tails.index(tail_positions)-1], tail_positions))
+        if len(tails) > 1:
+            for tail_positions in tails[1:]:
+                new_tails.append(translate_tail(new_tails[tails.index(tail_positions)-1], tail_positions))
     return head_positions, new_tails
 
 
@@ -65,14 +67,12 @@ def translate_head(translation, head_positions, tails):
     return head_positions, tails
 
 
-def process_instructions(instruction_set):
+def process_instructions(instruction_set, tail_size):
     head_positions = [(0, 0)]
-    tails = [[(0, 0)] for x in range(0,9)]
-    print(tails)
+    tails = [[(0, 0)] for x in range(0,tail_size)]
     for translation in instruction_set:
         head_positions, tails = translate_head(translation, head_positions, tails)
         if debug:
-            print('Finished translation, heads at {} tail at {}'.format(head_positions, tails))
             print('Finished translation, heads at {} tail at {}'.format(head_positions, tails))
             print('Number of tails: {}'.format(len(tails)))
     print(len(set(tails[-1])))
@@ -88,8 +88,8 @@ def get_input():
 
 def solve():
     instruction_set = get_input()
-
-    process_instructions(instruction_set)
+    process_instructions(instruction_set, 1)
+    process_instructions(instruction_set, 9)
 
 
 if __name__ == "__main__":

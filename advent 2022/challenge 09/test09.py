@@ -1,4 +1,4 @@
-from number09_part1 import solve
+from number09 import solve
 
 
 def test_valid_result():
