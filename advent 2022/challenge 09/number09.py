@@ -77,6 +77,7 @@ def process_instructions(instruction_set, tail_size):
             print('Number of tails: {}'.format(len(tails)))
     print(len(set(tails[-1])))
 
+
 def get_input():
     with open('input.txt', 'r') as input_file:
         instructions = []
