@@ -15,8 +15,8 @@ def translate_tail(head_positions, tail_positions):
         tail_positions.append(tail_pos)
         return tail_positions
     else:
-        dx = ceil((head_x-tail_x) / 2) if head_x > tail_x else -ceil((tail_x-head_x) /2)
-        dy = ceil((head_y-tail_y) / 2) if head_y > tail_y else -ceil((tail_y-head_y) /2)
+        dx = ceil((head_x - tail_x) / 2) if head_x > tail_x else -ceil((tail_x - head_x) /2)
+        dy = ceil((head_y - tail_y) / 2) if head_y > tail_y else -ceil((tail_y - head_y) /2)
         new_tail_pos = int(tail_x+dx), int(tail_y+dy)
         if debug:
             print('Moving tail {} to {}'.format(tail_pos, new_tail_pos))
