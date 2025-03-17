@@ -137,3 +137,4 @@ dmypy.json
 /.idea/vcs.xml
 .gitignore
 /.idea/dbnavigator.xml
+/.i18n_session_cookie
