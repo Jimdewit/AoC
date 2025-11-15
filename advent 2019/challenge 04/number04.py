@@ -1,11 +1,10 @@
 from collections import Counter
 
 
-def get_input():
+def get_input() -> tuple[int, int]:
     with open('./input.txt', 'r') as input_file:
-        num_range = [l.strip('\n') for l in input_file.readlines()][0]
-        min_num, max_num = int(num_range.split('-')[0]), int(num_range.split('-')[1])
-    return min_num, max_num
+        num_range = [l.strip('\n') for l in input_file.readlines()][0].split('-')
+    return int(num_range[0]), int(num_range[1])
 
 
 def check_sizes(number):
