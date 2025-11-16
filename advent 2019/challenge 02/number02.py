@@ -73,16 +73,19 @@ def part_one(inp):
 
 
 def part_two(inp):
-    original = inp.copy()
     for x in range(0, 100):
         for y in range(0, 100):
-            test_inp = original.copy()
+            test_inp = inp.copy()
             test_inp[1] = x
             test_inp[2] = y
             res = process_opcodes(test_inp)
             if res[0] == 19690720:
                 print(f"Got {x} and {y}, result = {x*100+y}")
                 break
+        else:
+            continue
+
+        break
 
 
 def get_input():
