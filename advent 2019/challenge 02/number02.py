@@ -1,6 +1,3 @@
-import copy
-
-
 class OpCode:
     def __init__(self, instruction, first_address, second_address, target_address):
         self._instruction = instruction
