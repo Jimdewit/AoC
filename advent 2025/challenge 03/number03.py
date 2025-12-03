@@ -11,22 +11,12 @@ def find_max_joltage(battery: str, joltage: str = '', offset: int = -1, iteratio
         return find_max_joltage(battery[max_jolt_index+1:], joltage, offset+1, iterations)
 
 
-def process_batteries_part_one(batteries: list[str]):
+def process_batteries(batteries: list[str], offset: int, iterations: int):
     joltage = 0
     for b in batteries:
         battery_joltage = ''
 
-        battery_joltage += find_max_joltage(b, iterations=2)
-        joltage += int(battery_joltage)
-    print(f"Total max joltage: {joltage}")
-
-
-def process_batteries_part_two(batteries: list[str]):
-    joltage = 0
-    for b in batteries:
-        battery_joltage = ''
-
-        battery_joltage += find_max_joltage(b, offset=-11, iterations=12)
+        battery_joltage += find_max_joltage(b, offset=offset, iterations=iterations)
         joltage += int(battery_joltage)
     print(f"Total max joltage: {joltage}")
 
@@ -40,8 +30,8 @@ def get_input() -> list[str]:
 def solve():
     start = datetime.now()
     daily_input = get_input()
-    process_batteries_part_one(daily_input)
-    process_batteries_part_two(daily_input)
+    process_batteries(daily_input, -1, 2)
+    process_batteries(daily_input, -11, 12)
     print(f"Recursion only took {datetime.now()-start} micros")
 
 
