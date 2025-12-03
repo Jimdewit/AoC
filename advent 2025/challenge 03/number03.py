@@ -2,12 +2,8 @@ from datetime import datetime
 
 
 def find_max_joltage(battery: str, joltage: str = '', offset: int = -1, iterations: int = 0) -> str:
-    if offset != 0:
-        joltage += max(battery[:offset])
-        max_jolt_index = battery.index(max(battery[:offset]))
-    else:
-        joltage += max(battery)
-        max_jolt_index = battery.index(max(battery))
+    joltage += max(battery[:offset] if offset != 0 else battery)
+    max_jolt_index = battery.index(max(battery[:offset] if offset != 0 else battery))
 
     if len(joltage) == iterations:
         return joltage
