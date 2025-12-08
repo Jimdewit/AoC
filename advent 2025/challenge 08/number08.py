@@ -50,10 +50,9 @@ def process_inputs(junction_boxes: list[Coord]):
     x = 0
     iterations = 0
     for a, b, dist in deduped_dists:
-        if iterations == 10:
+        if iterations == 1000:
             res = 1
             for k in sorted(circuits, key=lambda key: len(circuits[key]), reverse=True)[:3]:
-                print(f"Circuit {k} has length {len(circuits[k])}")
                 res *= len(circuits[k])
             print(f"Part one: {res}")
         iterations += 1
@@ -83,8 +82,6 @@ def process_inputs(junction_boxes: list[Coord]):
             if len(circuits[a.circuit]) == len(junction_boxes):
                 print(f"Part two:{a.x * b.x}")
                 break
-
-    print("All done?")
 
 
 def get_input() -> list[Coord]:
